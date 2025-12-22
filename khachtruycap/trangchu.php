@@ -129,6 +129,65 @@
       line-height: 1.6;
       color: #555;
     }
+/* ===== TRANG CHỦ ===== */
+.trangchu {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  background: #ffffff;
+  padding: 70px;
+  border-radius: 16px;
+}
+
+/* Cột trái */
+.trangchu-left {
+  flex: 1;
+}
+
+.trangchu-left h2 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  white-space: nowrap;
+}
+
+.trangchu-left p {
+  font-size: 20px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+/* Nút */
+.btn-khampha {
+  display: inline-block;
+  padding: 14px 32px;
+  background: #2e7d32;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.btn-khampha:hover {
+  background: #1b5e20;
+  transform: translateY(-2px);
+}
+
+/* Cột phải (ảnh) */
+.trangchu-right {
+  flex: 1;
+}
+
+.trangchu-right img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
   </style>
 </head>
 <body>
@@ -163,12 +222,25 @@
  
 
     <div class="gioithieu">
-      <div>
-        <h2>Chào mừng đến với trang chủ 🌱</h2>
-        <p>
-          Chúng tôi mang đến những sản phẩm cây xanh chất lượng, giúp không gian sống và làm việc của bạn trở nên trong lành và đầy sức sống.
-        </p>
-      </div>
+      <div class="gioithieu trangchu">
+  <div class="trangchu-left">
+    <h2>Chào mừng đến với Green Tree</h2>
+    <h3 style="font-size: 25px;"> Vẻ đẹp của thiên nhiên ngay trong tầm tay bạn</h3>
+    <p>
+      Tìm thấy niềm vui trong cây xanh - Khám phá bộ sưu tập cây cảnh cho mọi không gian trong cuộc sống của bạn.
+    </p>
+    <p>
+      Chúng tôi mang đến những sản phẩm cây xanh chất lượng,
+      giúp không gian sống và làm việc của bạn trở nên trong lành
+      và đầy sức sống.
+    </p>
+    <a href="sanpham.php" class="btn-khampha">Khám phá sản phẩm</a>
+  </div>
+
+  <div class="trangchu-right">
+    <img src="https://caydeban.com.vn/image/cache/catalog/products/cay-de-ban/binh-an_0955-600x600.JPG" alt="Green Tree">
+  </div>
+</div>
     </div>
   </div>
 </body>

@@ -129,6 +129,68 @@
       line-height: 1.6;
       color: #555;
     }
+    .gioithieu {
+  background: #ffffff;
+  padding: 60px 80px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Tiêu đề lớn */
+.gt-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 8px;
+}
+
+/* Dòng mô tả dưới tiêu đề */
+.gt-sub {
+  text-align: center;
+  font-size: 15px;
+  color: #777;
+  margin-bottom: 45px;
+}
+
+/* Layout 2 cột */
+.gt-content {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+/* Cột chữ bên trái */
+.gt-text {
+  flex: 1;
+}
+
+.gt-text h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 18px;
+}
+
+.gt-text p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 18px;
+}
+
+/* Cột ảnh bên phải */
+.gt-image {
+  flex: 1;
+}
+
+.gt-image img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
   </style>
 </head>
 <body>
@@ -149,8 +211,8 @@
 
   <div class="nav">
     <div class="nav-left">
-      <a href="#">🏠️ Trang chủ</a>
-      <a href="gioithieu.php">ⓘ Giới thiệu</a>
+      <a href="trangchu.php">🏠️ Trang chủ</a>
+      <a href="#">ⓘ Giới thiệu</a>
       <a href="sanpham.php">🛍️ Sản phẩm</a>
     </div>
     <div class="nav-right">
@@ -163,12 +225,32 @@
  
 
     <div class="gioithieu">
-      <div>
-        <h2>Chào mừng đến với trang chủ 🌱</h2>
-        <p>
-          Chúng tôi mang đến những sản phẩm cây xanh chất lượng, giúp không gian sống và làm việc của bạn trở nên trong lành và đầy sức sống.
-        </p>
-      </div>
+       <h2 class="gt-title">Về Chúng Tôi</h2>
+  <p class="gt-sub">
+    Mang thiên nhiên đến gần bạn hơn với những loại cây cảnh cao cấp.
+  </p>
+
+  <div class="gt-content">
+    <div class="gt-text">
+      <h3>Chúng Tôi Là Ai</h3>
+      <p>
+        Tại Green Home, chúng tôi đam mê kết nối con người với vẻ đẹp của thiên nhiên.
+        Niềm tin của chúng tôi là cung cấp những loại cây chất lượng cao
+        và giải pháp làm vườn giúp biến không gian sống của bạn thành những
+        ốc đảo xanh tươi.
+      </p>
+      <p>
+        Dù bạn là người yêu thiên nhiên hay mới bắt đầu,
+        chúng tôi luôn sẵn sàng đồng hành cùng bạn trên từng bước đường.
+        Từ cây trồng trong nhà đến cảnh quan ngoài trời,
+        chúng tôi có mọi thứ bạn cần để tạo nên khu vườn mơ ước.
+      </p>
+    </div>
+
+    <div class="gt-image">
+      <img src="https://newstore24h.com/wp-content/uploads/2024/12/thiet-ke-cua-hang-cay-canh-42.jpg" alt="Green Tree">
+    </div>
+  </div>
     </div>
   </div>
 </body>

@@ -164,7 +164,7 @@ header("Pragma: no-cache");
   <div class="nav">
     <div class="nav-left">
       <a href="user.php">🏠️ Trang chủ</a>
-      <a href="gioithieuuser.php">ⓘ Giới thiệu</a>
+      <a href="gioithieuusser.php">ⓘ Giới thiệu</a>
       <a href="sanphamuser.php">🛍️ Sản phẩm</a>
     </div>
     <div class="nav-right">
