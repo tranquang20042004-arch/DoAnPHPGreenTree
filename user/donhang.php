@@ -43,6 +43,32 @@ $orders = excuteResult($sql);
             font-size: 22px;
             font-weight: bold;
             color: #2e7d32;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact {
+            font-size: 14px;
+            color: #444;
+            font-weight: 500;
+            padding-right: 15px;
+            border-right: 1px solid #ddd;
+        }
+
+        .nav_login a {
+            text-decoration: none;
+            color: #2e7d32;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav_login a:hover {
+            color: #1b5e20;
         }
 
         /* Nav */
@@ -53,22 +79,33 @@ $orders = excuteResult($sql);
             z-index: 999;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             background-color: #ffffff;
             padding: 12px 40px;
             border-top: 1px solid #eee;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .nav a {
+        .nav-left a, .nav-right a {
             margin: 0 15px;
             text-decoration: none;
             color: #333;
             font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
             transition: all 0.3s;
         }
 
-        .nav a:hover {
+        .nav-left a:hover, .nav-right a:hover {
             color: #2e7d32;
+            background: #f1f8f4;
+            transform: translateY(-2px);
+        }
+
+        .nav-left a.active, .nav-right a.active {
+            color: #fff;
+            background: #2e7d32;
+            font-weight: 600;
         }
         
         .container {
@@ -180,24 +217,86 @@ $orders = excuteResult($sql);
             color: #2e7d32;
             margin-bottom: 15px;
         }
+        .header {
+  height: 75px;
+  padding: 0 40px;
+}
+
+        /* Alert messages */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="logo">🌿 Green Tree</div>
+        <div class="header-right">
+            <div class="contact">📞 0345 530 628</div>
+            <div class="nav_login"><a href="../login/index.php">👤 Đăng kí / Đăng nhập</a></div>
+        </div>
     </div>
 
     <div class="nav">
-        <div>
-            <a href="user.php">🏠️ Trang chủ</a>
+        <div class="nav-left">
+            <a href="user.php">🏠 Trang chủ</a>
+            <a href="gioithieuusser.php">ⓘ Giới thiệu</a>
             <a href="sanphamuser.php">🛍️ Sản phẩm</a>
-            <a href="donhang.php">🧾 Đơn hàng</a>
+        </div>
+        <div class="nav-right">
+            <a href="donhang.php" class="active">🧾 Đơn mua</a>
             <a href="giohangview.php">🛒 Giỏ hàng</a>
+            <a href="logout.php" style="color: #dc3545;" onclick="return confirm('Bạn có chắc muốn đăng xuất?')">🚪 Đăng xuất</a>
         </div>
     </div>
 
     <div class="container">
         <h1 style="color: #2e7d32; margin-bottom: 30px;">🧾 Đơn hàng của tôi</h1>
+        
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success">
+                <?php 
+                echo $_SESSION['success']; 
+                unset($_SESSION['success']);
+                ?>
+            </div>
+        <?php endif; ?>
+        
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-error">
+                <?php 
+                echo $_SESSION['error']; 
+                unset($_SESSION['error']);
+                ?>
+            </div>
+        <?php endif; ?>
         
         <?php if (empty($orders)): ?>
             <div class="empty-order">

@@ -1,6 +1,15 @@
 <?php
 require "../config/database.php"; // file kết nối DB
 
+// Lấy danh sách danh mục
+$danhmuc_list = $conn->query("SELECT * FROM DanhMuc ORDER BY ten");
+
+// Kiểm tra nếu có lọc theo danh mục
+$danhmuc_id = isset($_GET['danhmuc_id']) ? intval($_GET['danhmuc_id']) : 0;
+
+// Lấy từ khóa tìm kiếm
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
 // Lấy danh sách sản phẩm + danh mục + ảnh
 $sql = "
 SELECT 
@@ -12,6 +21,23 @@ SELECT
 FROM SanPham sp
 LEFT JOIN DanhMuc dm ON sp.danhmuc_id = dm.id
 LEFT JOIN HinhAnh ha ON ha.sanpham_id = sp.id
+";
+
+// Thêm điều kiện WHERE
+$conditions = [];
+if ($danhmuc_id > 0) {
+    $conditions[] = "sp.danhmuc_id = $danhmuc_id";
+}
+if (!empty($search)) {
+    $search_escaped = $conn->real_escape_string($search);
+    $conditions[] = "(sp.ten LIKE '%$search_escaped%' OR dm.ten LIKE '%$search_escaped%')";
+}
+
+if (!empty($conditions)) {
+    $sql .= " WHERE " . implode(' AND ', $conditions);
+}
+
+$sql .= "
 GROUP BY sp.id
 ORDER BY sp.id DESC
 ";
@@ -227,17 +253,55 @@ $result = $conn->query($sql);
   <div class="header">
     <div class="logo">🌿 Green Tree</div>
     <div class="search-bar">
-      <select>
-        <option>Tất cả danh mục</option>
-        <option>Cây trong nhà</option>
-        <option>Cây văn phòng</option>
-        <option>Cây phong thủy</option>
+      <select id="danhmuc-select" onchange="filterByCategory()">
+        <option value="">Tất cả danh mục</option>
+        <?php 
+        $danhmuc_list->data_seek(0);
+        while($dm = $danhmuc_list->fetch_assoc()): 
+        ?>
+          <option value="<?= $dm['id'] ?>" <?= ($danhmuc_id == $dm['id']) ? 'selected' : '' ?>>
+            <?= htmlspecialchars($dm['ten']) ?>
+          </option>
+        <?php endwhile; ?>
       </select>
-      <input type="text" placeholder="Tìm kiếm sản phẩm...">
+      <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm..." value="<?= htmlspecialchars($search) ?>" onkeyup="searchProducts()">
     </div>
     <div class="contact">📞 0345 530 628</div>
     <div class="nav_login"><a href="../login/index.php">👤 Đăng kí / Đăng nhập</a></div>
   </div>
+
+  <script>
+    let searchTimeout;
+    
+    function filterByCategory() {
+      const danhmucId = document.getElementById('danhmuc-select').value;
+      const searchValue = document.getElementById('search-input').value;
+      let url = 'sanpham.php';
+      const params = [];
+      
+      if (danhmucId) params.push('danhmuc_id=' + danhmucId);
+      if (searchValue) params.push('search=' + encodeURIComponent(searchValue));
+      
+      if (params.length > 0) url += '?' + params.join('&');
+      window.location.href = url;
+    }
+    
+    function searchProducts() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(function() {
+        const searchValue = document.getElementById('search-input').value;
+        const danhmucId = document.getElementById('danhmuc-select').value;
+        let url = 'sanpham.php';
+        const params = [];
+        
+        if (danhmucId) params.push('danhmuc_id=' + danhmucId);
+        if (searchValue) params.push('search=' + encodeURIComponent(searchValue));
+        
+        if (params.length > 0) url += '?' + params.join('&');
+        window.location.href = url;
+      }, 500);
+    }
+  </script>
 
   <div class="nav">
     <div class="nav-left">
@@ -256,6 +320,7 @@ $result = $conn->query($sql);
 
     <div class="gioithieu">
       <h2>Sản phẩm của Green Tree 🌱</h2>
+      <?php if ($result->num_rows > 0): ?>
       <div class="product-grid">
 <?php while ($product = $result->fetch_assoc()): ?>
     <div class="product-box">
@@ -285,6 +350,13 @@ $result = $conn->query($sql);
     </div>
 <?php endwhile; ?>
 </div>
+      <?php else: ?>
+        <div style="text-align: center; padding: 40px; background: #fff3cd; border-radius: 8px; margin-top: 20px;">
+          <h3 style="color: #856404;">⚠️ Không tìm thấy sản phẩm</h3>
+          <p style="color: #856404;">Không có sản phẩm nào phù hợp với tìm kiếm của bạn.</p>
+          <a href="sanpham.php" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background: #2e7d32; color: white; text-decoration: none; border-radius: 5px;">Xem tất cả sản phẩm</a>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </body>

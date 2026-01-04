@@ -1,6 +1,10 @@
 <?php
 require "../config/database.php";
 
+// Đếm tổng số đơn hàng chờ xác nhận
+$sqlDonHangCho = "SELECT COUNT(*) AS tong_dh_cho FROM donhang WHERE trang_thai = 'Chờ xác nhận'";
+$tongDonHangCho = excuteResult($sqlDonHangCho)[0]['tong_dh_cho'];
+
 // Lấy danh sách sản phẩm + danh mục + nhà cung cấp + ảnh
 $sql = "
 SELECT 
@@ -69,6 +73,23 @@ $result = $conn->query($sql);
   background: #e6f4ea;
   font-weight: 700;
 }
+
+.badge {
+  background: #dc3545;
+  color: white;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.sidebar-item-with-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .sidebar a{
     text-decoration: none;
     
@@ -174,10 +195,17 @@ $result = $conn->query($sql);
 
     <div style="padding-left: 10px;">
         <a href="../admin/admin.php"><div class="sidebar-item">Trang Chủ</div></a>
-        <a href="#"><div class="sidebar-item">Tài Khoản</div></a>
         <a href="../admin/danhsachnguoidung.php"><div class="sidebar-item">Người Dùng</div></a>
         <a href="../admin/danhsachsanpham.php"><div class="sidebar-item sidebar-active">Sản Phẩm</div></a>
         <a href="../admin/danhsachncc.php"><div class="sidebar-item">Nhà Cung Cấp</div></a>
+        <a href="../admin/danhsachdonhang.php">
+          <div class="sidebar-item sidebar-item-with-badge">
+            <span>Đơn Hàng</span>
+            <?php if ($tongDonHangCho > 0): ?>
+              <span class="badge"><?= $tongDonHangCho ?></span>
+            <?php endif; ?>
+          </div>
+        </a>
     </div>
 
     <div>

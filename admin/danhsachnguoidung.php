@@ -8,6 +8,10 @@ require_once '../config/database.php';
 //     exit();
 // }
 
+// Đếm tổng số đơn hàng chờ xác nhận
+$sqlDonHangCho = "SELECT COUNT(*) AS tong_dh_cho FROM donhang WHERE trang_thai = 'Chờ xác nhận'";
+$tongDonHangCho = excuteResult($sqlDonHangCho)[0]['tong_dh_cho'];
+
 // Lấy danh sách người dùng
 $sql = "
     SELECT 
@@ -90,6 +94,22 @@ if (isset($_GET['edit'])) {
     .sidebar-active {
       background: #e6f4ea;
       font-weight: 600;
+    }
+
+    .badge {
+      background: #dc3545;
+      color: white;
+      border-radius: 10px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 8px;
+    }
+
+    .sidebar-item-with-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     /* MAIN CONTENT */
@@ -303,10 +323,17 @@ if (isset($_GET['edit'])) {
 
       <div style="padding-left: 10px;">
         <a href="admin.php"><div class="sidebar-item">Trang Chủ</div></a>
-        <a href="#"><div class="sidebar-item">Tài Khoản</div></a>
         <a href="danhsachnguoidung.php"><div class="sidebar-item sidebar-active">Người Dùng</div></a>
         <a href="danhsachsanpham.php"><div class="sidebar-item">Sản Phẩm</div></a>
         <a href="danhsachncc.php"><div class="sidebar-item">Nhà Cung Cấp</div></a>
+        <a href="danhsachdonhang.php">
+          <div class="sidebar-item sidebar-item-with-badge">
+            <span>Đơn Hàng</span>
+            <?php if ($tongDonHangCho > 0): ?>
+              <span class="badge"><?= $tongDonHangCho ?></span>
+            <?php endif; ?>
+          </div>
+        </a>
       </div>
       <div >
         <a href="../login/index.php"><button class="logout-btn" onclick="return confirmLogout();">

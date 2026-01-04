@@ -194,6 +194,10 @@ header("Pragma: no-cache");
 .trangchu-right {
   flex: 1;
 }
+.header {
+  height: 75px;
+  padding: 0 40px;
+}
 
 .trangchu-right img {
   width: 100%;
@@ -222,7 +226,7 @@ header("Pragma: no-cache");
 
   <div class="nav">
     <div class="nav-left">
-      <a href="trangchuuser.php">🏠️ Trang chủ</a>
+      <a href="user.php">🏠️ Trang chủ</a>
       <a href="gioithieuusser.php">ⓘ Giới thiệu</a>
       <a href="sanphamuser.php">🛍️ Sản phẩm</a>
     </div>

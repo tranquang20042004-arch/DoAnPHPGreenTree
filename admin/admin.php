@@ -13,6 +13,9 @@ $tongNguoiDung = excuteResult($sqlNguoiDung)[0]['tong_nd'];
 $sqlNCC = "SELECT COUNT(*) AS tong_ncc FROM NhaCungCap";
 $tongNCC = excuteResult($sqlNCC)[0]['tong_ncc'];
 
+// Đếm tổng số đơn hàng chờ xác nhận
+$sqlDonHangCho = "SELECT COUNT(*) AS tong_dh_cho FROM donhang WHERE trang_thai = 'Chờ xác nhận'";
+$tongDonHangCho = excuteResult($sqlDonHangCho)[0]['tong_dh_cho'];
 
 ?>
 
@@ -69,6 +72,22 @@ $tongNCC = excuteResult($sqlNCC)[0]['tong_ncc'];
     .sidebar-active {
       background: #e6f4ea;
       font-weight: 600;
+    }
+
+    .badge {
+      background: #dc3545;
+      color: white;
+      border-radius: 10px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 8px;
+    }
+
+    .sidebar-item-with-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     /* MAIN CONTENT */
@@ -286,10 +305,17 @@ $tongNCC = excuteResult($sqlNCC)[0]['tong_ncc'];
 
       <div style="padding-left: 10px;">
         <a href="admin.php"><div class="sidebar-item sidebar-active">Trang Chủ</div></a>
-        <a href="#"><div class="sidebar-item">Tài Khoản</div></a>
         <a href="danhsachnguoidung.php"><div class="sidebar-item">Người Dùng</div></a>
         <a href="danhsachsanpham.php"><div class="sidebar-item">Sản Phẩm</div></a>
         <a href="danhsachncc.php"><div class="sidebar-item">Nhà Cung Cấp</div></a>
+        <a href="danhsachdonhang.php">
+          <div class="sidebar-item sidebar-item-with-badge">
+            <span>Đơn Hàng</span>
+            <?php if ($tongDonHangCho > 0): ?>
+              <span class="badge"><?= $tongDonHangCho ?></span>
+            <?php endif; ?>
+          </div>
+        </a>
       </div>
       <div >
         <a href="../login/index.php"><button class="logout-btn" onclick="return confirmLogout();">
@@ -307,6 +333,10 @@ $tongNCC = excuteResult($sqlNCC)[0]['tong_ncc'];
                         <div class="stat-box" style="background-color: #1565c0;">
                             <h3 style="color: #feffffff;">Tổng số sản phẩm</h3>
                             <p><?= $tongSanPham ?></p>
+                        </div>
+                        <div class="stat-box" style="background-color: #ff5722;">
+                            <h3 style="color: #feffffff;">Đơn hàng chờ xác nhận</h3>
+                            <p><?= $tongDonHangCho ?></p>
                         </div>
                         <div class="stat-box" style="background-color: #08eb72ff;">
                             <h3 style="color: #feffffff;">Tổng số người dùng</h3>

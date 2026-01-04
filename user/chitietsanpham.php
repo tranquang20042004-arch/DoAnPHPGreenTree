@@ -62,50 +62,29 @@ $product = ($result && $result->num_rows > 0) ? $result->fetch_assoc() : null;//
       letter-spacing: 1px;
     }
 
-    .search-bar {
+    .header-right {
       display: flex;
       align-items: center;
-      flex-grow: 1;
-      margin: 0 40px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 25px;
-      padding: 5px 10px;
-    }
-
-    .search-bar select, .search-bar input {
-      border: none;
-      outline: none;
-      font-size: 15px;
-      background: transparent;
-    }
-
-    .search-bar select {
-      margin-right: 10px;
-      color: #555;
-    }
-
-    .search-bar input {
-      flex-grow: 1;
-      padding: 8px;
-    }
-
-    .search-bar::after {
-      content: "🔍";
-      margin-left: 10px;
-      color: #2e7d32;
+      gap: 15px;
     }
 
     .contact {
       font-size: 14px;
       color: #444;
       font-weight: 500;
+      padding-right: 15px;
+      border-right: 1px solid #ddd;
     }
 
     .nav_login a {
       text-decoration: none;
       color: #2e7d32;
       font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .nav_login a:hover {
+      color: #1b5e20;
     }
 
     /* Nav */
@@ -128,12 +107,21 @@ $product = ($result && $result->num_rows > 0) ? $result->fetch_assoc() : null;//
       text-decoration: none;
       color: #333;
       font-weight: 500;
-      transition: color 0.3s, border-bottom 0.3s;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s;
     }
 
     .nav-left a:hover, .nav-right a:hover {
       color: #2e7d32;
-      border-bottom: 2px solid #2e7d32;
+      background: #f1f8f4;
+      transform: translateY(-2px);
+    }
+
+    .nav-left a.active, .nav-right a.active {
+      color: #fff;
+      background: #2e7d32;
+      font-weight: 600;
     }
 
     /* Body */
@@ -154,7 +142,10 @@ $product = ($result && $result->num_rows > 0) ? $result->fetch_assoc() : null;//
       color: #2e7d32;
       margin-bottom: 15px;
     }
-
+    .header {
+  height: 75px;
+  padding: 0 40px;
+}
     .gioithieu p {
       line-height: 1.6;
       color: #555;
@@ -190,24 +181,17 @@ function decreaseQty() {
 <body>
   <div class="header">
     <div class="logo">🌿 Green Tree</div>
-    <div class="search-bar">
-      <select>
-        <option>Tất cả danh mục</option>
-        <option>Cây trong nhà</option>
-        <option>Cây văn phòng</option>
-        <option>Cây phong thủy</option>
-      </select>
-      <input type="text" placeholder="Tìm kiếm sản phẩm...">
+    <div class="header-right">
+      <div class="contact">📞 0345 530 628</div>
+      <div class="nav_login"><a href="../login/index.php">👤 Đăng kí / Đăng nhập</a></div>
     </div>
-    <div class="contact">📞 0345 530 628</div>
-    <div class="nav_login"><a href="index.php">👤 Đăng kí / Đăng nhập</a></div>
   </div>
 
   <div class="nav">
     <div class="nav-left">
-      <a href="#">🏠️ Trang chủ</a>
-      <a href="gioithieuuser.php">ⓘ Giới thiệu</a>
-      <a href="sanphamuser.php">🛍️ Sản phẩm</a>
+      <a href="user.php">🏠 Trang chủ</a>
+      <a href="gioithieuusser.php">ⓘ Giới thiệu</a>
+      <a href="sanphamuser.php" class="active">🛍️ Sản phẩm</a>
     </div>
     <div class="nav-right">
       <a href="#">🧾 Đơn mua</a>
