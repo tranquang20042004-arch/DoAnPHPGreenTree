@@ -3,7 +3,7 @@ session_start();
 
 // Kiểm tra đăng nhập
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login/index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -15,7 +15,7 @@ header("Pragma: no-cache");
 require "../config/database.php"; // file kết nối DB
 
 // Lấy danh sách danh mục
-$danhmuc_list = $conn->query("SELECT * FROM DanhMuc ORDER BY ten");
+$danhmuc_list = $conn->query("SELECT * FROM danhmuc ORDER BY ten");
 
 // Kiểm tra nếu có lọc theo danh mục
 $danhmuc_id = isset($_GET['danhmuc_id']) ? intval($_GET['danhmuc_id']) : 0;
@@ -31,9 +31,9 @@ SELECT
     sp.gia AS GiaSanPham,
     dm.ten AS TenDanhMuc,
     ha.url AS UrlHinhAnh
-FROM SanPham sp
-LEFT JOIN DanhMuc dm ON sp.danhmuc_id = dm.id
-LEFT JOIN HinhAnh ha ON ha.sanpham_id = sp.id
+FROM sanpham sp
+LEFT JOIN danhmuc dm ON sp.danhmuc_id = dm.id
+LEFT JOIN hinhanh ha ON ha.sanpham_id = sp.id
 ";
 
 // Thêm điều kiện WHERE
@@ -303,7 +303,7 @@ $result = $conn->query($sql);
     </div>
     <div class="header-right">
       <div class="contact">📞 0345 530 628</div>
-      <div class="nav_login"><a href="../login/index.php">👤 Đăng kí / Đăng nhập</a></div>
+      <div class="nav_login"><a href="../index.php">👤 Đăng kí / Đăng nhập</a></div>
     </div>
   </div>
 

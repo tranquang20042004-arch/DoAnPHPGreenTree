@@ -18,6 +18,6 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 // Chuyển hướng
-header("Location: ../login/index.php");
+header("Location: ../index.php");
 exit();
 ?>

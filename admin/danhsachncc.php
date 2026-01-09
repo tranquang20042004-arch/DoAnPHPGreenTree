@@ -21,7 +21,7 @@ $sql = "
         email,
         mo_ta,
         so_dien_thoai
-    FROM NhaCungCap
+    FROM nhacungcap
     ORDER BY id DESC
 ";
 $nhacungcaps = excuteResult($sql);
@@ -29,7 +29,7 @@ $editNCC = null;
 
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
-    $sqlEdit = "SELECT * FROM NhaCungCap WHERE id = $id";
+    $sqlEdit = "SELECT * FROM nhacungcap WHERE id = $id";
     $editNCC = excuteResult($sqlEdit);
     if ($editNCC) $editNCC = $editNCC[0];
 }
@@ -204,7 +204,7 @@ if (isset($_GET['edit'])) {
         </a>
       </div>
       <div>
-        <a href="../login/index.php"><button class="logout-btn">Đăng xuất</button></a>
+        <a href="../index.php"><button class="logout-btn">Đăng xuất</button></a>
       </div>
     </aside>
 

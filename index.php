@@ -1,6 +1,6 @@
-<!-- <?php
+<?php
 session_start();
-require_once '../config/database.php'; // dùng excuteResult()
+require_once 'config/database.php'; // dùng excuteResult()
 
 $error = '';
 
@@ -21,14 +21,15 @@ if (isset($_POST['login'])) {
         } else {
             // Ghi session
             $_SESSION['user_id'] = $user['id'];
+            $_SESSION['email'] = $user['email'];
             $_SESSION['ho_ten'] = $user['ten'];
             $_SESSION['role'] = ($user['vaitro_id'] == 1) ? 'admin' : 'user';
 
             // Phân quyền
             if ($_SESSION['role'] == 'admin') {
-                header("Location: ../admin/admin.php");
+                header("Location: admin/admin.php");
             } else {
-                header("Location: ../user/user.php");
+                header("Location: user/user.php");
             }
             exit();
         }
@@ -256,11 +257,11 @@ if (isset($_POST['login'])) {
         </form>
 
         <p style="margin-top:15px; font-size:14px; color:#555;">
-            Bạn chưa có tài khoản? <a href="newlogin.php" 
+            Bạn chưa có tài khoản? <a href="../login/newlogin.php" 
             style="color:#2e7d32; font-weight:600;">Đăng ký ngay</a>
         </p>
     </div>
 
   </div>
 </body>
-</html> -->
+</html>

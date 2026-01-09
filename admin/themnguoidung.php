@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sdt = $_POST['so_dien_thoai'];
     $dia_chi = $_POST['dia_chi'];
 
-    $sql = "INSERT INTO NguoiDung (tai_khoan, email, ho, ten, mat_khau, vaitro_id, so_dien_thoai, dia_chi)
+    $sql = "INSERT INTO nguoidung (tai_khoan, email, ho, ten, mat_khau, vaitro_id, so_dien_thoai, dia_chi)
             VALUES ('$tai_khoan', '$email', '$ho', '$ten', '$mat_khau', '$vaitro_id', '$sdt', '$dia_chi')";
     excute($sql);
 

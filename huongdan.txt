@@ -1,0 +1,647 @@
+================================================================================
+                    HƯỚNG DẪN CÀI ĐẶT VÀ SỬ DỤNG
+                        DỰ ÁN PHP GREENTREE
+                  HỆ THỐNG BÁN CÂY XANH TRỰC TUYẾN
+================================================================================
+
+MỤC LỤC
+--------
+1. Yêu cầu hệ thống
+2. Cài đặt môi trường phát triển
+3. Cài đặt dự án
+4. Cấu hình cơ sở dữ liệu
+5. Hướng dẫn sử dụng cho Quản trị viên (Admin)
+6. Hướng dẫn sử dụng cho Người dùng (User)
+7. Xử lý sự cố thường gặp
+
+================================================================================
+1. YÊU CẦU HỆ THỐNG
+================================================================================
+
+1.1. Yêu cầu phần cứng
+-----------------------
+- RAM: Tối thiểu 2GB (Khuyến nghị 4GB trở lên)
+- Ổ cứng: 500MB dung lượng trống
+- Kết nối Internet ổn định
+
+1.2. Yêu cầu phần mềm
+---------------------
+- Hệ điều hành: Windows 7/8/10/11, macOS, hoặc Linux
+- Web Server: Apache 2.4 trở lên
+- PHP: Phiên bản 7.4 trở lên (Khuyến nghị PHP 8.0+)
+- MySQL: Phiên bản 5.7 trở lên hoặc MariaDB 10.2+
+- Web Browser: Chrome, Firefox, Edge, Safari (phiên bản mới nhất)
+
+1.3. Công cụ hỗ trợ
+-------------------
+- XAMPP 8.0+ (hoặc WAMP, MAMP, LAMP)
+- phpMyAdmin (đã tích hợp trong XAMPP)
+- Text Editor: VS Code, Sublime Text, hoặc Notepad++
+
+================================================================================
+2. CÀI ĐẶT MÔI TRƯỜNG PHÁT TRIỂN
+================================================================================
+
+2.1. Cài đặt XAMPP (Windows)
+-----------------------------
+Bước 1: Download XAMPP
+   - Truy cập: https://www.apachefriends.org/download.html
+   - Chọn phiên bản phù hợp với hệ điều hành
+   - Tải về và chạy file cài đặt
+
+Bước 2: Cài đặt XAMPP
+   - Double-click file .exe vừa tải
+   - Chọn thư mục cài đặt (mặc định: C:\xampp)
+   - Chọn các component: Apache, MySQL, PHP, phpMyAdmin
+   - Nhấn "Next" và hoàn tất cài đặt
+
+Bước 3: Khởi động XAMPP
+   - Mở XAMPP Control Panel
+   - Nhấn "Start" cho Apache
+   - Nhấn "Start" cho MySQL
+   - Kiểm tra: Mở trình duyệt, truy cập http://localhost
+   - Nếu thấy trang XAMPP Dashboard => Thành công!
+
+2.2. Kiểm tra cài đặt PHP
+--------------------------
+   - Mở Command Prompt (Windows) hoặc Terminal (Mac/Linux)
+   - Gõ lệnh: php -v
+   - Kết quả hiển thị phiên bản PHP => Cài đặt thành công
+
+================================================================================
+3. CÀI ĐẶT DỰ ÁN
+================================================================================
+
+3.1. Chuẩn bị thư mục dự án
+----------------------------
+Bước 1: Copy source code
+   - Giải nén file dự án DoAnPHPGreenTree.zip (nếu có)
+   - Hoặc copy thư mục DoAnPHPGreenTree
+   - Dán vào thư mục: C:\xampp\htdocs\
+   - Kết quả: C:\xampp\htdocs\DoAnPHPGreenTree\
+
+Bước 2: Kiểm tra cấu trúc thư mục
+   Đảm bảo cấu trúc như sau:
+   DoAnPHPGreenTree/
+   ├── admin/           (Chức năng quản trị)
+   ├── config/          (File cấu hình)
+   ├── user/            (Chức năng người dùng)
+   ├── khachtruycap/    (Giao diện khách)
+   ├── login/           (Đăng nhập)
+   └── index.php        (Trang chủ)
+
+3.2. Phân quyền thư mục (Linux/Mac)
+------------------------------------
+   - Mở Terminal
+   - Chạy lệnh: chmod -R 755 /path/to/DoAnPHPGreenTree
+   - Chạy lệnh: chown -R www-data:www-data /path/to/DoAnPHPGreenTree
+
+================================================================================
+4. CÀU HÌNH CƠ SỞ DỮ LIỆU
+================================================================================
+
+                                                                                                                                                                        4.1. Tạo cơ sở dữ liệu
+                                                                                                                                                                        -----------------------
+                                                                                                                                                                        Bước 1: Truy cập phpMyAdmin
+                                                                                                                                                                        - Mở trình duyệt
+                                                                                                                                                                        - Truy cập: http://localhost/phpmyadmin
+                                                                                                                                                                        - Đăng nhập (mặc định không cần mật khẩu)
+
+                                                                                                                                                                        Bước 2: Tạo database mới
+                                                                                                                                                                        - Click vào tab "Databases"
+                                                                                                                                                                        - Tại "Create database", nhập: db_green_treee
+                                                                                                                                                                        - Chọn Collation: utf8mb4_unicode_ci
+                                                                                                                                                                        - Nhấn "Create"
+
+Bước 3: Import dữ liệu (nếu có file .sql)
+   - Click vào database "db_green_treee" vừa tạo
+   - Click tab "Import"
+   - Nhấn "Choose File" và chọn file db_green_treee.sql
+   - Nhấn "Go" để import
+   - Chờ thông báo "Import has been successfully finished"
+
+4.2. Cấu hình kết nối database
+-------------------------------
+Bước 1: Mở file cấu hình
+   - Mở file: DoAnPHPGreenTree/config/config.php
+   - Sử dụng Notepad++ hoặc VS Code
+
+Bước 2: Chỉnh sửa thông tin kết nối (Môi trường Local)
+   Đảm bảo các dòng sau được uncomment và cấu hình đúng:
+
+   define('HOST', 'localhost');
+   define('USERNAME', 'root');
+   define('PASSWORD', '');
+   define('DATABASE', 'db_green_treee');
+
+Bước 3: Comment các dòng hosting (nếu chạy local)
+   // define('HOST', 'sql103.infinityfree.com');
+   // define('USERNAME', 'if0_40653111');
+   // define('PASSWORD', 'DsAlYh3lTo7');
+   // define('DATABASE', 'if0_40653111_db_green_treee');
+
+Bước 4: Lưu file (Ctrl + S)
+
+4.3. Kiểm tra kết nối
+----------------------
+   - Mở trình duyệt
+   - Truy cập: http://localhost/DoAnPHPGreenTree
+   - Nếu không có lỗi => Kết nối thành công!
+
+================================================================================
+5. HƯỚNG DẪN SỬ DỤNG CHO QUẢN TRỊ VIÊN (ADMIN)
+================================================================================
+
+5.1. Đăng nhập Admin
+---------------------
+Bước 1: Truy cập trang đăng nhập Admin
+   - URL: http://localhost/DoAnPHPGreenTree/admin/admin.php
+   - Hoặc: http://localhost/DoAnPHPGreenTree/login/
+
+Bước 2: Nhập thông tin đăng nhập
+   - Username: admin (hoặc theo database)
+   - Password: (mật khẩu admin đã tạo)
+   - Nhấn "Đăng nhập"
+
+Bước 3: Truy cập Dashboard Admin
+   - Sau khi đăng nhập thành công
+   - Hiển thị trang quản trị với menu chức năng
+
+5.2. Quản lý Sản phẩm
+----------------------
+a) Xem danh sách sản phẩm
+   - Menu: "Quản lý sản phẩm" > "Danh sách sản phẩm"
+   - File: admin/danhsachsanpham.php
+   - Hiển thị: Bảng danh sách tất cả sản phẩm
+   - Thông tin: Mã SP, Tên, Giá, Số lượng, Hình ảnh, Trạng thái
+
+b) Thêm sản phẩm mới
+   - Menu: "Quản lý sản phẩm" > "Thêm sản phẩm"
+   - File: admin/themsanpham.php
+   - Nhập thông tin:
+     + Tên sản phẩm *
+     + Mô tả chi tiết
+     + Giá bán *
+     + Số lượng tồn kho *
+     + Danh mục
+     + Upload hình ảnh
+   - Nhấn "Thêm sản phẩm"
+   - Thông báo thành công
+
+c) Sửa thông tin sản phẩm
+   - Tại danh sách sản phẩm
+   - Nhấn nút "Sửa" (biểu tượng bút chì)
+   - File: admin/suasanpham.php
+   - Chỉnh sửa các thông tin cần thiết
+   - Nhấn "Cập nhật"
+
+d) Xóa sản phẩm
+   - Tại danh sách sản phẩm
+   - Nhấn nút "Xóa" (biểu tượng thùng rác)
+   - File: admin/xoasanpham.php
+   - Xác nhận xóa
+   - Lưu ý: Không xóa sản phẩm đã có đơn hàng
+
+5.3. Quản lý Đơn hàng
+----------------------
+a) Xem danh sách đơn hàng
+   - Menu: "Quản lý đơn hàng" > "Danh sách đơn hàng"
+   - File: admin/danhsachdonhang.php
+   - Thông tin: Mã đơn, Khách hàng, Ngày đặt, Tổng tiền, Trạng thái
+
+b) Chi tiết đơn hàng
+   - Nhấn vào mã đơn hàng hoặc nút "Chi tiết"
+   - File: admin/chitietdonhang.php
+   - Hiển thị:
+     + Thông tin khách hàng
+     + Danh sách sản phẩm trong đơn
+     + Địa chỉ giao hàng
+     + Phương thức thanh toán
+     + Tổng tiền
+
+c) Xác nhận đơn hàng
+   - Tại chi tiết đơn hàng
+   - Chọn trạng thái mới:
+     + "Đang xử lý"
+     + "Đang giao hàng"
+     + "Đã giao"
+     + "Đã hủy"
+   - File: admin/xacnhandonhang.php
+   - Nhấn "Cập nhật trạng thái"
+
+d) In đơn hàng
+   - Tại chi tiết đơn hàng
+   - Nhấn nút "In đơn hàng"
+   - Sử dụng Ctrl + P để in
+
+5.4. Quản lý Người dùng
+------------------------
+a) Danh sách người dùng
+   - Menu: "Quản lý người dùng"
+   - File: admin/danhsachnguoidung.php
+   - Hiển thị: Username, Email, Họ tên, Số ĐT, Vai trò
+
+b) Thêm người dùng mới
+   - Nhấn "Thêm người dùng"
+   - File: admin/themnguoidung.php
+   - Nhập thông tin:
+     + Username *
+     + Password *
+     + Email *
+     + Họ và tên
+     + Số điện thoại
+     + Địa chỉ
+     + Vai trò (Admin/User)
+   - Nhấn "Thêm"
+
+c) Sửa thông tin người dùng
+   - File: admin/suanguoidung.php
+   - Chỉnh sửa thông tin
+   - Lưu ý: Không được đổi username
+   - Nhấn "Cập nhật"
+
+d) Xóa người dùng
+   - File: admin/xoanguoidung.php
+   - Xác nhận xóa
+   - Lưu ý: Không xóa tài khoản đang có đơn hàng
+
+5.5. Quản lý Nhà cung cấp
+--------------------------
+a) Danh sách nhà cung cấp
+   - Menu: "Quản lý nhà cung cấp"
+   - File: admin/danhsachncc.php
+   - Thông tin: Mã NCC, Tên, Địa chỉ, SĐT, Email
+
+b) Thêm nhà cung cấp
+   - File: admin/themnhacungcap.php
+   - Nhập: Tên, Địa chỉ, SĐT, Email, Ghi chú
+   - Nhấn "Thêm"
+
+c) Sửa nhà cung cấp
+   - File: admin/suancc.php
+   - Cập nhật thông tin
+   - Nhấn "Cập nhật"
+
+5.6. Quản lý Tài khoản Admin
+-----------------------------
+   - Menu: "Tài khoản"
+   - File: admin/taikhoan.php
+   - Đổi mật khẩu
+   - Cập nhật thông tin cá nhân
+
+================================================================================
+6. HƯỚNG DẪN SỬ DỤNG CHO NGƯỜI DÙNG (USER)
+================================================================================
+
+6.1. Đăng ký tài khoản
+-----------------------
+Bước 1: Truy cập trang đăng ký
+   - URL: http://localhost/DoAnPHPGreenTree
+   - Nhấn nút "Đăng ký" hoặc "Register"
+
+Bước 2: Điền thông tin đăng ký
+   - Username * (ít nhất 6 ký tự)
+   - Email * (định dạng email hợp lệ)
+   - Password * (ít nhất 8 ký tự)
+   - Xác nhận password *
+   - Họ và tên
+   - Số điện thoại
+   - Địa chỉ
+
+Bước 3: Nhấn "Đăng ký"
+   - Hệ thống kiểm tra thông tin
+   - Thông báo đăng ký thành công
+   - Tự động chuyển đến trang đăng nhập
+
+6.2. Đăng nhập
+---------------
+   - URL: http://localhost/DoAnPHPGreenTree/login/
+   - Nhập Username và Password
+   - Nhấn "Đăng nhập"
+   - Chuyển đến trang chủ User
+
+6.3. Xem và tìm kiếm sản phẩm
+------------------------------
+a) Xem danh sách sản phẩm
+   - Trang chủ: user/trangchuuser.php
+   - Menu: "Sản phẩm" - user/sanphamuser.php
+   - Hiển thị lưới sản phẩm với hình ảnh, tên, giá
+
+b) Xem chi tiết sản phẩm
+   - Nhấn vào sản phẩm
+   - File: user/chitietsanpham.php
+   - Hiển thị:
+     + Hình ảnh lớn
+     + Tên sản phẩm
+     + Giá bán
+     + Mô tả chi tiết
+     + Số lượng còn lại
+     + Nút "Thêm vào giỏ hàng"
+
+c) Tìm kiếm sản phẩm
+   - Nhập từ khóa vào ô tìm kiếm
+   - Nhấn Enter hoặc nút "Tìm kiếm"
+   - Hiển thị kết quả phù hợp
+
+6.4. Quản lý Giỏ hàng
+----------------------
+a) Thêm sản phẩm vào giỏ
+   - Tại trang chi tiết sản phẩm
+   - Chọn số lượng
+   - Nhấn "Thêm vào giỏ hàng"
+   - File: user/giohangadd.php
+   - Thông báo thành công
+
+b) Xem giỏ hàng
+   - Menu: "Giỏ hàng" hoặc biểu tượng giỏ
+   - File: user/giohangview.php
+   - Hiển thị:
+     + Danh sách sản phẩm đã chọn
+     + Hình ảnh, tên, giá, số lượng
+     + Thành tiền từng sản phẩm
+     + Tổng tiền toàn bộ đơn hàng
+
+c) Cập nhật giỏ hàng
+   - Thay đổi số lượng sản phẩm
+   - Nhấn "Cập nhật"
+   - Tổng tiền tự động tính lại
+
+d) Xóa sản phẩm khỏi giỏ
+   - File: user/xoasanpham_giohang.php
+   - Nhấn nút "Xóa" tại sản phẩm cần xóa
+   - Xác nhận xóa
+
+6.5. Đặt hàng và Thanh toán
+----------------------------
+a) Tiến hành đặt hàng
+   - Tại giỏ hàng, nhấn "Đặt hàng"
+   - File: user/dathang.php
+   - Điền thông tin giao hàng:
+     + Họ tên người nhận *
+     + Số điện thoại *
+     + Địa chỉ nhận hàng *
+     + Ghi chú (tùy chọn)
+
+b) Chọn phương thức thanh toán
+   - File: user/thanhtoan.php
+   - Các tùy chọn:
+     + COD (Thanh toán khi nhận hàng)
+     + Chuyển khoản ngân hàng
+     + VNPay (nếu tích hợp)
+   - Chọn phương thức phù hợp
+
+c) Xác nhận đơn hàng
+   - File: user/xuly_dathang.php
+   - Kiểm tra lại thông tin
+   - Nhấn "Xác nhận đặt hàng"
+   - Hệ thống tạo đơn hàng
+   - Hiển thị mã đơn hàng
+   - Gửi email xác nhận (nếu có)
+
+d) Thanh toán VNPay (nếu có)
+   - File: user/xuly_vnpay.php
+   - Chuyển đến cổng VNPay
+   - Quét mã QR hoặc nhập thông tin thẻ
+   - Xác nhận thanh toán
+   - Quay lại website với kết quả
+
+6.6. Quản lý Đơn hàng
+----------------------
+a) Xem danh sách đơn hàng
+   - Menu: "Đơn hàng của tôi"
+   - File: user/donhang.php
+   - Hiển thị:
+     + Mã đơn hàng
+     + Ngày đặt
+     + Tổng tiền
+     + Trạng thái (Chờ xử lý, Đang giao, Đã giao, Đã hủy)
+
+b) Xem chi tiết đơn hàng
+   - Nhấn vào mã đơn hàng
+   - File: user/chitietdonhang.php
+   - Thông tin:
+     + Sản phẩm trong đơn
+     + Địa chỉ giao hàng
+     + Phương thức thanh toán
+     + Tổng tiền
+     + Lịch sử trạng thái
+
+c) Hủy đơn hàng
+   - File: user/huydonhang.php
+   - Chỉ hủy được đơn ở trạng thái "Chờ xử lý"
+   - Nhấn nút "Hủy đơn"
+   - Nhập lý do hủy
+   - Xác nhận hủy
+
+6.7. Tài khoản cá nhân
+-----------------------
+a) Xem thông tin tài khoản
+   - Menu: "Tài khoản"
+   - File: user/user.php
+   - Hiển thị thông tin cá nhân
+
+b) Cập nhật thông tin
+   - Chỉnh sửa: Họ tên, SĐT, Địa chỉ, Email
+   - Nhấn "Cập nhật"
+   - Thông báo cập nhật thành công
+
+c) Đổi mật khẩu
+   - Nhập mật khẩu cũ
+   - Nhập mật khẩu mới
+   - Xác nhận mật khẩu mới
+   - Nhấn "Đổi mật khẩu"
+
+d) Đăng xuất
+   - Menu: "Đăng xuất"
+   - File: user/logout.php
+   - Xác nhận đăng xuất
+   - Quay về trang chủ khách
+
+6.8. Xem thông tin Giới thiệu
+------------------------------
+   - Menu: "Giới thiệu"
+   - File: user/gioithieuusser.php hoặc khachtruycap/gioithieu.php
+   - Thông tin về công ty, chính sách
+
+================================================================================
+7. XỬ LÝ SỰ CỐ THƯỜNG GẶP
+================================================================================
+
+7.1. Lỗi kết nối Database
+--------------------------
+Hiện tượng:
+   - Lỗi: "Connection failed: Access denied for user..."
+   - Trang web không load được
+
+Nguyên nhân:
+   - Sai thông tin kết nối trong config.php
+   - MySQL chưa được khởi động
+
+Cách khắc phục:
+   1. Kiểm tra XAMPP Control Panel, đảm bảo MySQL đang running
+   2. Mở file config/config.php
+   3. Kiểm tra lại HOST, USERNAME, PASSWORD, DATABASE
+   4. Đảm bảo database 'db_green_treee' đã được tạo
+   5. Refresh lại trang web
+
+7.2. Lỗi 404 Not Found
+-----------------------
+Hiện tượng:
+   - Lỗi: "Object not found! The requested URL was not found..."
+
+Nguyên nhân:
+   - Sai đường dẫn URL
+   - File không tồn tại
+
+Cách khắc phục:
+   1. Kiểm tra lại URL đã nhập
+   2. Đảm bảo đường dẫn đúng: http://localhost/DoAnPHPGreenTree/
+   3. Kiểm tra file có tồn tại trong thư mục không
+   4. Kiểm tra phân biệt chữ hoa/thường trong tên file
+
+7.3. Lỗi không upload được hình ảnh
+------------------------------------
+Hiện tượng:
+   - Upload ảnh sản phẩm thất bại
+   - Lỗi: "Failed to upload file"
+
+Nguyên nhân:
+   - Thư mục upload không có quyền ghi
+   - Dung lượng file quá lớn
+   - Định dạng file không được hỗ trợ
+
+Cách khắc phục:
+   1. Kiểm tra thư mục upload (thường là 'images' hoặc 'uploads')
+   2. Phân quyền thư mục (Windows: Properties > Security)
+   3. Kiểm tra php.ini:
+      - upload_max_filesize = 20M
+      - post_max_size = 20M
+   4. Chỉ upload file: .jpg, .jpeg, .png, .gif
+   5. Giảm kích thước file ảnh xuống dưới 2MB
+
+7.4. Lỗi Session/Không giữ được đăng nhập
+------------------------------------------
+Hiện tượng:
+   - Đăng nhập xong bị tự động logout
+   - Không lưu được giỏ hàng
+
+Nguyên nhân:
+   - Session không được khởi tạo
+   - Thiếu session_start()
+
+Cách khắc phục:
+   1. Kiểm tra đầu mỗi file PHP có session_start() chưa
+   2. Đảm bảo session_start() ở dòng đầu tiên (trước HTML)
+   3. Kiểm tra thư mục session trong php.ini
+   4. Xóa cookie trình duyệt và thử lại
+
+7.5. Lỗi hiển thị tiếng Việt (Unicode)
+---------------------------------------
+Hiện tượng:
+   - Tiếng Việt hiển thị ký tự lạ: Ä�á»�i thiá»‡u
+
+Nguyên nhân:
+   - Encoding không đúng
+   - Database collation không phải UTF-8
+
+Cách khắc phục:
+   1. Thêm vào đầu file PHP:
+      header('Content-Type: text/html; charset=utf-8');
+   2. Thêm vào file HTML:
+      <meta charset="UTF-8">
+   3. Đổi collation database thành utf8mb4_unicode_ci:
+      - Vào phpMyAdmin
+      - Chọn database
+      - Operations > Collation > utf8mb4_unicode_ci
+      - Nhấn "Go"
+   4. Lưu file PHP với encoding UTF-8 (trong VS Code/Notepad++)
+
+7.6. Lỗi Apache không khởi động được
+--------------------------------------
+Hiện tượng:
+   - XAMPP báo lỗi: "Apache shutdown unexpectedly"
+   - Port 80 hoặc 443 bị chiếm dụng
+
+Nguyên nhân:
+   - Port 80 đã được sử dụng bởi ứng dụng khác (Skype, IIS, etc.)
+
+Cách khắc phục:
+   1. Tắt Skype hoặc IIS (nếu đang chạy)
+   2. Hoặc đổi port Apache:
+      - Mở XAMPP Control Panel
+      - Nhấn "Config" bên cạnh Apache
+      - Chọn "httpd.conf"
+      - Tìm dòng: Listen 80
+      - Đổi thành: Listen 8080
+      - Save và restart Apache
+      - Truy cập: http://localhost:8080/DoAnPHPGreenTree/
+
+7.7. Lỗi MySQL không khởi động
+-------------------------------
+Hiện tượng:
+   - MySQL không start được trong XAMPP
+
+Nguyên nhân:
+   - Port 3306 bị chiếm
+   - Dữ liệu MySQL bị lỗi
+
+Cách khắc phục:
+   1. Kiểm tra port 3306:
+      - Mở CMD, gõ: netstat -ano | findstr :3306
+      - Nếu có process, kill process đó
+   2. Đổi port MySQL:
+      - Config > my.ini
+      - Tìm: port=3306
+      - Đổi thành: port=3307
+   3. Nếu vẫn lỗi, backup data và reinstall XAMPP
+
+7.8. Lỗi tốc độ tải trang chậm
+-------------------------------
+Hiện tượng:
+   - Website load rất lâu
+
+Cách khắc phục:
+   1. Tối ưu kích thước hình ảnh (nén ảnh trước khi upload)
+   2. Bật compression trong .htaccess
+   3. Sử dụng CDN cho thư viện JS/CSS
+   4. Optimize database (xóa dữ liệu rác)
+   5. Kiểm tra query chậm, tối ưu SQL
+   6. Bật cache nếu có
+
+7.9. Quên mật khẩu Admin
+-------------------------
+Cách khắc phục:
+   1. Truy cập phpMyAdmin: http://localhost/phpmyadmin
+   2. Chọn database: db_green_treee
+   3. Chọn bảng: users (hoặc admins)
+   4. Tìm tài khoản admin
+   5. Click "Edit"
+   6. Đổi password (nếu đã mã hóa):
+      - Chạy script PHP tạo hash:
+        echo password_hash('123456', PASSWORD_DEFAULT);
+      - Copy hash và paste vào trường password
+   7. Save changes
+   8. Đăng nhập với password mới: 123456
+
+7.10. Liên hệ hỗ trợ
+---------------------
+Nếu gặp lỗi không giải quyết được:
+   - Email: support@greentree.com (giả định)
+   - Facebook: fb.com/greentreevn
+   - Hotline: 0123.456.789
+   - Hoặc tạo issue trên GitHub repository
+
+================================================================================
+                            KẾT THÚC HƯỚNG DẪN
+================================================================================
+
+Ghi chú:
+- Hướng dẫn này dành cho phiên bản PHP GreenTree hiện tại
+- Một số chức năng có thể thay đổi trong các phiên bản sau
+- Nên backup database thường xuyên trước khi thực hiện thay đổi lớn
+- Đọc kỹ hướng dẫn trước khi thực hiện để tránh sai sót
+
+Phiên bản hướng dẫn: 1.0
+Ngày cập nhật: 05/01/2026
+
+© 2026 PHP GreenTree Project. All rights reserved.

@@ -278,7 +278,7 @@ $result = $conn->query($sql);
             </a>
         </div>
         <div>
-            <a href="../login/index.php"><button class="logout-btn">Đăng xuất</button></a>
+            <a href="../index.php"><button class="logout-btn">Đăng xuất</button></a>
         </div>
     </aside>
 

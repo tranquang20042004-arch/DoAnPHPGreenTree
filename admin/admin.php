@@ -2,15 +2,15 @@
 require_once '../config/database.php';
 
 // Đếm tổng số sản phẩm
-$sqlSanPham = "SELECT COUNT(*) AS tong_sp FROM SanPham";
+$sqlSanPham = "SELECT COUNT(*) AS tong_sp FROM sanpham";
 $tongSanPham = excuteResult($sqlSanPham)[0]['tong_sp'];
 
 // Đếm tổng số người dùng
-$sqlNguoiDung = "SELECT COUNT(*) AS tong_nd FROM NguoiDung WHERE trang_thai = 1";
+$sqlNguoiDung = "SELECT COUNT(*) AS tong_nd FROM nguoidung WHERE trang_thai = 1";
 $tongNguoiDung = excuteResult($sqlNguoiDung)[0]['tong_nd'];
 
 // Đếm tổng số nhà cung cấp
-$sqlNCC = "SELECT COUNT(*) AS tong_ncc FROM NhaCungCap";
+$sqlNCC = "SELECT COUNT(*) AS tong_ncc FROM nhacungcap";
 $tongNCC = excuteResult($sqlNCC)[0]['tong_ncc'];
 
 // Đếm tổng số đơn hàng chờ xác nhận
@@ -318,7 +318,7 @@ $tongDonHangCho = excuteResult($sqlDonHangCho)[0]['tong_dh_cho'];
         </a>
       </div>
       <div >
-        <a href="../login/index.php"><button class="logout-btn" onclick="return confirmLogout();">
+        <a href="../index.php"><button class="logout-btn" onclick="return confirmLogout();">
             Đăng xuất</button></a>
             
       </div>

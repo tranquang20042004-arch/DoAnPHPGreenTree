@@ -20,12 +20,12 @@ if (isset($_POST['register'])) {
         $error = "Mật khẩu không trùng nhau!";
     } else {
         // 2. Kiểm tra email đã tồn tại chưa
-        $checkEmail = excuteResult("SELECT * FROM NguoiDung WHERE email = '$email'");
+        $checkEmail = excuteResult("SELECT * FROM nguoidung WHERE email = '$email'");
         if ($checkEmail) {
             $error = "Email đã được sử dụng!";
         } else {
             // 3. Kiểm tra tài khoản đã tồn tại chưa
-            $checkUser = excuteResult("SELECT * FROM NguoiDung WHERE tai_khoan = '$tai_khoan'");
+            $checkUser = excuteResult("SELECT * FROM nguoidung WHERE tai_khoan = '$tai_khoan'");
             if ($checkUser) {
                 $error = "Tên tài khoản đã tồn tại!";
             } else {
@@ -33,7 +33,7 @@ if (isset($_POST['register'])) {
                 $passwordHash = md5($matkhau1);
 
                 $sql = "
-                    INSERT INTO NguoiDung (
+                    INSERT INTO nguoidung (
                         tai_khoan, email, ho, ten, mat_khau, vaitro_id, so_dien_thoai, ngay_tao, trang_thai
                     ) VALUES (
                         '$tai_khoan', '$email', '$ho', '$ten', '$passwordHash', 2, '$so_dien_thoai', NOW(), 1
@@ -298,7 +298,7 @@ if (isset($_POST['register'])) {
         </form>
 
         <p style="margin-top:15px; font-size:14px; color:#555;">
-            Bạn đã có tài khoản? <a href="index.php" 
+            Bạn đã có tài khoản? <a href="../index.php" 
             style="color:#2e7d32; font-weight:600;">Đăng nhập ngay</a>
         </p>
         <p style="color:red;"><?= $error ?></p>

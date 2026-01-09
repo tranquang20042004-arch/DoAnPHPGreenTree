@@ -25,7 +25,7 @@ $sql = "
         END AS vai_tro,
         so_dien_thoai,
         ngay_tao
-    FROM NguoiDung
+    FROM nguoidung
     WHERE trang_thai = 1
     ORDER BY id DESC
 ";
@@ -34,7 +34,7 @@ $editUser = null;
 
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
-    $sqlEdit = "SELECT * FROM NguoiDung WHERE id = $id";
+    $sqlEdit = "SELECT * FROM nguoidung WHERE id = $id";
     $editUser = excuteResult($sqlEdit);
     if ($editUser) $editUser = $editUser[0];
 }
@@ -336,7 +336,7 @@ if (isset($_GET['edit'])) {
         </a>
       </div>
       <div >
-        <a href="../login/index.php"><button class="logout-btn" onclick="return confirmLogout();">
+        <a href="../index.php"><button class="logout-btn" onclick="return confirmLogout();">
             Đăng xuất</button></a>
             
       </div>

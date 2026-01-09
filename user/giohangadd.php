@@ -7,8 +7,8 @@ $qty = (int)$_POST['qty'];
 
 // Lấy thông tin sản phẩm
 $sql = "SELECT sp.id, sp.ten, sp.gia, ha.url AS anh
-        FROM SanPham sp
-        LEFT JOIN HinhAnh ha ON ha.sanpham_id = sp.id
+        FROM sanpham sp
+        LEFT JOIN hinhanh ha ON ha.sanpham_id = sp.id
         WHERE sp.id = $id LIMIT 1";
 $result  = $conn->query($sql);
 $product = $result->fetch_assoc();

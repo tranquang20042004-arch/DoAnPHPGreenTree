@@ -1,5 +1,6 @@
 <?php
-require_once 'config.php';
+//require_once 'config.php';
+require_once __DIR__ . '/config.php';
 
 $conn = new mysqli(HOST, USERNAME, PASSWORD, DATABASE);
 $conn->set_charset("utf8");

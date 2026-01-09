@@ -15,10 +15,10 @@ SELECT
     dm.ten AS ten_danhmuc,
     ncc.ten AS ten_ncc,
     ha.url AS anh
-FROM SanPham sp
-LEFT JOIN DanhMuc dm ON sp.danhmuc_id = dm.id
-LEFT JOIN NhaCungCap ncc ON sp.nhacungcap_id = ncc.id
-LEFT JOIN HinhAnh ha ON ha.sanpham_id = sp.id
+FROM sanpham sp
+LEFT JOIN danhmuc dm ON sp.danhmuc_id = dm.id
+LEFT JOIN nhacungcap ncc ON sp.nhacungcap_id = ncc.id
+LEFT JOIN hinhanh ha ON ha.sanpham_id = sp.id
 GROUP BY sp.id
 ORDER BY sp.id DESC
 ";
@@ -209,7 +209,7 @@ $result = $conn->query($sql);
     </div>
 
     <div>
-        <a href="../login/index.php">
+        <a href="../index.php">
             <button class="logout-btn" onclick="return confirm('Bạn chắc chắn muốn đăng xuất?')">
                 Đăng xuất
             </button>

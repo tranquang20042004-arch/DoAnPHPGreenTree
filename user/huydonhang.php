@@ -4,7 +4,7 @@ require_once '../config/database.php';
 
 // Kiểm tra đăng nhập
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login/index.php");
+    header("Location: ../index.php");
     exit();
 }
 

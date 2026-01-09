@@ -3,7 +3,7 @@ session_start();
 
 // Kiểm tra đăng nhập
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login/index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -17,8 +17,8 @@ require "../config/database.php";
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 $sql = "SELECT sp.id, sp.ten, sp.gia, sp.mo_ta, sp.so_luong, ha.url AS anh
-        FROM SanPham sp
-        LEFT JOIN HinhAnh ha ON ha.sanpham_id = sp.id
+        FROM sanpham sp
+        LEFT JOIN hinhanh ha ON ha.sanpham_id = sp.id
         WHERE sp.id = $id
         LIMIT 1";// Lấy thông tin sản phẩm cùng ảnh đại diện
 $result = $conn->query($sql); // Sử dụng đối tượng mysqli để truy vấn
@@ -183,7 +183,7 @@ function decreaseQty() {
     <div class="logo">🌿 Green Tree</div>
     <div class="header-right">
       <div class="contact">📞 0345 530 628</div>
-      <div class="nav_login"><a href="../login/index.php">👤 Đăng kí / Đăng nhập</a></div>
+      <div class="nav_login"><a href="../index.php">👤 Đăng kí / Đăng nhập</a></div>
     </div>
   </div>
 

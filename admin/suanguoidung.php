@@ -4,7 +4,7 @@ require '../config/database.php';
 $id = $_GET["id"];
 
 // Lấy dữ liệu người dùng theo ID
-$sql = "SELECT * FROM NguoiDung WHERE id = $id";
+$sql = "SELECT * FROM nguoidung WHERE id = $id";
 $result = $conn->query($sql);
 $u = $result->fetch_assoc();
 
@@ -16,7 +16,7 @@ if (isset($_POST["capnhat"])) {
     $sdt = $_POST["so_dien_thoai"];
     $vaitro = $_POST["vaitro"];
 
-    $sqlUpdate = "UPDATE NguoiDung SET
+    $sqlUpdate = "UPDATE nguoidung SET
                     ho='$ho',
                     ten='$ten',
                     email='$email',

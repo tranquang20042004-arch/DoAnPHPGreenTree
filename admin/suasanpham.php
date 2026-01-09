@@ -5,9 +5,9 @@ $id = $_GET['id'] ?? null;
 if (!$id) die("Không xác định sản phẩm");
 
 // Lấy dữ liệu sản phẩm
-$sp = $conn->query("SELECT sp.*, ha.url AS anh FROM SanPham sp LEFT JOIN HinhAnh ha ON sp.id = ha.sanpham_id WHERE sp.id=$id")->fetch_assoc();
-$danhmuc = $conn->query("SELECT * FROM DanhMuc");
-$nhacungcap = $conn->query("SELECT * FROM NhaCungCap");
+$sp = $conn->query("SELECT sp.*, ha.url AS anh FROM sanpham sp LEFT JOIN hinhanh ha ON sp.id = ha.sanpham_id WHERE sp.id=$id")->fetch_assoc();
+$danhmuc = $conn->query("SELECT * FROM danhmuc");
+$nhacungcap = $conn->query("SELECT * FROM nhacungcap");
 
 if (isset($_POST['capnhat'])) {
     $ten = $_POST['ten'];
@@ -18,12 +18,12 @@ if (isset($_POST['capnhat'])) {
     $url = $_POST['url'];
     $mo_ta = $_POST['mo_ta'];
 
-    $sql = "UPDATE SanPham SET ten=?, gia=?, danhmuc_id=?, nhacungcap_id=?, so_luong=?, mo_ta=?, ngay_capnhat=NOW() WHERE id=?";
+    $sql = "UPDATE sanpham SET ten=?, gia=?, danhmuc_id=?, nhacungcap_id=?, so_luong=?, mo_ta=?, ngay_capnhat=NOW() WHERE id=?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssiissi", $ten, $gia, $danhmuc_id, $nhacungcap_id, $so_luong, $mo_ta, $id);
 
     if ($stmt->execute()) {
-        $conn->query("UPDATE HinhAnh SET url='$url' WHERE sanpham_id=$id");
+        $conn->query("UPDATE hinhanh SET url='$url' WHERE sanpham_id=$id");
         echo "<script>alert('Cập nhật sản phẩm thành công!'); window.location='danhsachsanpham.php';</script>";
     } else {
         echo "<script>alert('Lỗi: ".$conn->error."');</script>";

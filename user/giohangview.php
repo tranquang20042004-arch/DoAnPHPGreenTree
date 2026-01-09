@@ -3,7 +3,7 @@ session_start();
 
 // Kiểm tra đăng nhập
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login/index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -419,7 +419,7 @@ header("Pragma: no-cache");
     <div class="logo">🌿 Green Tree</div>
     <div class="header-right">
       <div class="contact">📞 0345 530 628</div>
-      <div class="nav_login"><a href="../login/index.php">👤 Đăng kí / Đăng nhập</a></div>
+      <div class="nav_login"><a href="../index.php">👤 Đăng kí / Đăng nhập</a></div>
     </div>
   </div>
 

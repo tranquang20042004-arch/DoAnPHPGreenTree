@@ -7,7 +7,7 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']); // chống injection
 
-$sql = "UPDATE NguoiDung SET trang_thai = 0 WHERE id = $id";
+$sql = "UPDATE nguoidung SET trang_thai = 0 WHERE id = $id";
 
 excute($sql); // chạy câu SQL
 
