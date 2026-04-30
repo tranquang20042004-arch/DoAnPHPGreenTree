@@ -23,7 +23,22 @@ if (isset($_POST['capnhat'])) {
     $stmt->bind_param("ssiissi", $ten, $gia, $danhmuc_id, $nhacungcap_id, $so_luong, $mo_ta, $id);
 
     if ($stmt->execute()) {
-        $conn->query("UPDATE hinhanh SET url='$url' WHERE sanpham_id=$id");
+        // Upsert URL anh: neu chua co thi them moi
+        $stmtImgCheck = $conn->prepare("SELECT id FROM hinhanh WHERE sanpham_id=? LIMIT 1");
+        $stmtImgCheck->bind_param("i", $id);
+        $stmtImgCheck->execute();
+        $resultImg = $stmtImgCheck->get_result();
+
+        if ($resultImg && $resultImg->num_rows > 0) {
+            $stmtImgUpdate = $conn->prepare("UPDATE hinhanh SET url=? WHERE sanpham_id=?");
+            $stmtImgUpdate->bind_param("si", $url, $id);
+            $stmtImgUpdate->execute();
+        } else {
+            $stmtImgInsert = $conn->prepare("INSERT INTO hinhanh (sanpham_id, url) VALUES (?, ?)");
+            $stmtImgInsert->bind_param("is", $id, $url);
+            $stmtImgInsert->execute();
+        }
+
         echo "<script>alert('Cập nhật sản phẩm thành công!'); window.location='danhsachsanpham.php';</script>";
     } else {
         echo "<script>alert('Lỗi: ".$conn->error."');</script>";

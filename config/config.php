@@ -1,5 +1,5 @@
 <?php
-define('HOST', '');
+define('HOST', 'localhost');
 define('USERNAME', 'root');
 define('PASSWORD', '');
 define('DATABASE', 'db_green_treee');
